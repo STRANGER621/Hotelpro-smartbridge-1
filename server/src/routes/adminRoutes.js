@@ -1,0 +1,11 @@
+import { Router } from 'express';
+import { protect, authorize } from '../middleware/authMiddleware.js';
+import { dashboard, allBookings, createRoom, updateRoom, deleteRoom } from '../controllers/adminController.js';
+const router = Router();
+router.use(protect, authorize('admin', 'staff'));
+router.get('/dashboard', dashboard);
+router.get('/bookings', allBookings);
+router.post('/rooms', authorize('admin'), createRoom);
+router.patch('/rooms/:id', authorize('admin'), updateRoom);
+router.delete('/rooms/:id', authorize('admin'), deleteRoom);
+export default router;
